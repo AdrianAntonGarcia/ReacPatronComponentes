@@ -11,35 +11,76 @@ interface Product {
   img?: string;
 }
 
+/**
+ * Componente de la imagen del producto
+ * @param param0
+ * @returns
+ */
+export const ProductImage = ({ img = '' }) => {
+  return (
+    <img
+      className={styles.productImg}
+      src={img ? img : noImage}
+      alt="Product"
+    />
+  );
+};
+
+/**
+ * Componente del título de la imagen
+ * @param param0
+ * @returns
+ */
+export const ProductoTitle = ({ title }: { title: string }) => {
+  return <span className={styles.productDescription}>{title}</span>;
+};
+
+/**
+ * Componente de los botones del producto
+ */
+interface ProductButtonsProps {
+  increaseBy: (value: number) => void;
+  counter: number;
+}
+export const ProductButtons = ({
+  increaseBy,
+  counter,
+}: ProductButtonsProps) => {
+  return (
+    <div className={styles.buttonsContainer}>
+      <button
+        className={styles.buttonMinus}
+        onClick={() => {
+          increaseBy(-1);
+        }}
+      >
+        -
+      </button>
+      <div className={styles.countLabel}>{counter}</div>
+      <button
+        className={styles.buttonAdd}
+        onClick={() => {
+          increaseBy(1);
+        }}
+      >
+        +
+      </button>
+    </div>
+  );
+};
+
+/**
+ * Componente que devuelve la tarjeta de un producto
+ * @param param0
+ * @returns
+ */
 export const ProductCard = ({ product }: Props) => {
   const { counter, increaseBy } = useProduct();
   return (
     <div className={styles.productCard}>
-      <img
-        className={styles.productImg}
-        src={product.img ? product.img : noImage}
-        alt="Coffee mug"
-      />
-      <span className={styles.productDescription}>{product.title}</span>
-      <div className={styles.buttonsContainer}>
-        <button
-          className={styles.buttonMinus}
-          onClick={() => {
-            increaseBy(-1);
-          }}
-        >
-          -
-        </button>
-        <div className={styles.countLabel}>{counter}</div>
-        <button
-          className={styles.buttonAdd}
-          onClick={() => {
-            increaseBy(1);
-          }}
-        >
-          +
-        </button>
-      </div>
+      <ProductImage img={product.img} />
+      <ProductoTitle title={product.title} />
+      <ProductButtons counter={counter} increaseBy={increaseBy} />
     </div>
   );
 };

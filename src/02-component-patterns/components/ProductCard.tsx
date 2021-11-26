@@ -1,15 +1,7 @@
 import styles from '../styles/styles.module.css';
 import noImage from '../assets/no-image.jpg';
 import { useProduct } from '../hooks/useProduct';
-
-interface Props {
-  product: Product;
-}
-interface Product {
-  id: string;
-  title: string;
-  img?: string;
-}
+import { ReactElement } from 'react';
 
 /**
  * Componente de la imagen del producto
@@ -31,7 +23,7 @@ export const ProductImage = ({ img = '' }) => {
  * @param param0
  * @returns
  */
-export const ProductoTitle = ({ title }: { title: string }) => {
+export const ProductTitle = ({ title }: { title: string }) => {
   return <span className={styles.productDescription}>{title}</span>;
 };
 
@@ -69,18 +61,35 @@ export const ProductButtons = ({
   );
 };
 
+interface Props {
+  product: Product;
+  children?: ReactElement | ReactElement[];
+}
+
+interface Product {
+  id: string;
+  title: string;
+  img?: string;
+}
+
 /**
  * Componente que devuelve la tarjeta de un producto
  * @param param0
  * @returns
  */
-export const ProductCard = ({ product }: Props) => {
+export const ProductCard = ({ children, product }: Props) => {
   const { counter, increaseBy } = useProduct();
   return (
     <div className={styles.productCard}>
-      <ProductImage img={product.img} />
+      {children}
+      {/* <ProductImage img={product.img} />
       <ProductoTitle title={product.title} />
-      <ProductButtons counter={counter} increaseBy={increaseBy} />
+      <ProductButtons counter={counter} increaseBy={increaseBy} /> */}
     </div>
   );
 };
+
+// COMPOUND COMPONENT PATTERN
+ProductCard.Title = ProductTitle;
+ProductCard.Image = ProductImage;
+ProductCard.Buttons = ProductButtons;

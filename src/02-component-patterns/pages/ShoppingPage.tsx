@@ -12,7 +12,16 @@ export const ShoppingPage = () => {
       <h1>Shopping Store</h1>
       <hr />
       <div style={{ display: 'flex', flexDirection: 'row', flexWrap: 'wrap' }}>
-        <ProductCard product={product} />
+        {/* <ProductCard product={product}>
+          <ProductCard />
+          <ProductCard title={product.title} />
+          <ProductCard counter={0} increaseBy={() => {}} />
+        </ProductCard> */}
+        <ProductCard product={product}>
+          <ProductCard.Image />
+          <ProductCard.Title title={product.title} />
+          <ProductCard.Buttons counter={0} increaseBy={() => {}} />
+        </ProductCard>
       </div>
     </div>
   );
